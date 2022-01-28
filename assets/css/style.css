@@ -1,4 +1,11 @@
 #nav-bar{
     background-color: rgb(3, 121, 111);
-    background: linear-gradient(#096f79,  #00ffc8);
+    background: linear-gradient(#096f79,  #5fecce);
+    height: 75px;
 }
+
+.navbar-brand {
+    font-size: 36px;
+    color: white;
+}
+
