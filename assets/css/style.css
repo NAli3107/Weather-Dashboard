@@ -1,3 +1,4 @@
-#weather-container{
-    align-items: flex-end;
+#nav-bar{
+    background-color: rgb(3, 121, 111);
+    background: linear-gradient(#096f79,  #00ffc8);
 }

@@ -9,21 +9,34 @@ const currentHumidity = document.getElementById("humidity");
 const currentWindSpeed = document.getElementById("wind-speed");
 const currentUV = document.getElementById("UV-index");
 
+/* Function to load location using longitude and latitude
+
 
 /*Function to fetch data from Current Weather API*/
 function getCurrentWeather(event){
     event.preventDefault()
     // console.log(inputBox.value)
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${inputBox.value}&appid=${apiKey}`
-    fetch(url)
+    let currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${inputBox.value}&appid=${apiKey}`
+    fetch(currentWeatherApi)
     .then(function(response){
         return response.json()
     })
     .then(function(data){
         console.log(data)
-        let cityName = data['name'];
+        let nameValue = data.name;
+        let tempValue = data.main.temp;
+        let celsiusTemp = (tempValue - 273.15);
+        let humidityValue = data.main.humidity;
+        let windSpeedValue = data.wind.speed;
 
-        name.innerHTML = cityName;
+        cityName.innerHTML = nameValue;
+        console.log(nameValue);
+        // add innerHTML for icon
+        currentTemperature.innerHTML = "Temp:" + " " + Math.floor(celsiusTemp) + "°C";
+        console.log(tempValue);
+        currentHumidity.innerHTML = "Humidity:" + " " + humidityValue;
+        console.log(humidityValue);
+        currentWindSpeed.innerHTML = "Wind:" + " " + windSpeedValue;
     })
 }
 
