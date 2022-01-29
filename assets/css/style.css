@@ -1,6 +1,6 @@
 #nav-bar{
     background-color: rgb(3, 121, 111);
-    background: linear-gradient(#096f79,  #5fecce);
+    background: linear-gradient(#096f79,  #0bc7a1ed);
     height: 75px;
 }
 
@@ -11,4 +11,10 @@
 
 #search-bar{
     align-items: center;
+}
+
+.card{
+    background: linear-gradient(#096f79,  #0bc7a1ed);
+    margin-bottom: 20px;
+    font-size: 20px;
 }

@@ -11,20 +11,23 @@ const currentUV = document.getElementById("UV-index");
 const currentIcon = document.getElementById("current-icon");
 const forecast = document.querySelector(".forecast");
 const current = document.querySelector(".current")
+const historyElement = document.getElementById("history");
 
-/* Function to load location using longitude and latitude
+
 
 
 /*Function to fetch data from Current Weather API*/
 function getCurrentWeather(city) {
 
-  let currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  let currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   fetch(currentWeatherApi)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       console.log(data);
+
+      // array for local storage 
           
       let nameValue = data.name;
       cityName.innerHTML = nameValue + " " + currentDate;
@@ -45,7 +48,7 @@ function getCurrentWeather(city) {
       console.log(tempValue);
 
       let humidityValue = data.main.humidity;
-      currentHumidity.innerHTML = "Humidity:" + " " + humidityValue + " " + "%";
+      currentHumidity.innerHTML = "Humidity:" + " " + humidityValue + "%";
       console.log(humidityValue);
 
       let windSpeedValue = data.wind.speed;
@@ -81,10 +84,10 @@ function getForecast(latitude, longitude){
           uvButton.innerHTML = data.current.uvi;
 
           // if else statement to indicate whether UV is favorable (green), moderate(yellow) or severe(red)
-          if (data.uvi < 3) {
+          if (data.current.uvi < 3) {
             uvButton.classList.add("btn-success");
           }
-          else if (data.uvi < 7) {
+          else if (data.current.uvi < 7) {
             uvButton.classList.add("btn-warning");
           }
           else {
@@ -117,10 +120,10 @@ function displayForecast(data){
       wind.setAttribute("class", "weather-forecast");
       const icon = document.createElement("img");
       icon.setAttribute("src",`https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`);
-      icon.style.width = "9rem"
-      temp.textContent = "Temperature:" + " " + data.daily[i].temp.day
-      humidity.textContent = "Humidity:" + " " + data.daily[i].humidity
-      wind.textContent = "Humidity:" + " " + data.daily[i].wind_speed
+      icon.style.width = "4rem";
+      temp.textContent = "Temperature:" + " " + data.daily[i].temp.day + "°C";
+      humidity.textContent = "Humidity:" + " " + data.daily[i].humidity + "%";
+      wind.textContent = "Humidity:" + " " + data.daily[i].wind_speed + " " + "MPH";
       cardText.append(temp, humidity, wind)
       cardBody.append(cardText)
       card.append(icon, cardBody)
@@ -131,11 +134,9 @@ function displayForecast(data){
 }
 
 
-//how to use submit-button event to set off more than one function
-submitButton.addEventListener("click", (e)=>{
-  e.preventDefault()
-  const city = inputBox.value
-  getCurrentWeather(city)
+submitButton.addEventListener("click", (event)=>{
+  event.preventDefault()
+  const city = inputBox.value;
+  getCurrentWeather(city);
 })
-
 
