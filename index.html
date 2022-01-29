@@ -21,7 +21,7 @@
 
     <main class="container-fluid flex-row">
       
-        <div class="container">
+      <section id="search-bar" class="container">
         <div class="row">
           <div class="col-5">
             <h3 class="search-header my-4">Search for a city:</h3>
@@ -29,20 +29,20 @@
                 <div class="input-group mb-3">
                     <input id="city-input" type="text" class="form-control me-2" placeholder="Enter city name" />
                     <button class="btn btn-primary" type="submit" id="search-button"> Submit
-                    <!-- <i class="fas fa-search"></i> -->
+                    <i class="fas fa-search"></i>
                     </button>
                 </div>
             </form>
           </div> 
           <!--Could potentially add another div with a button to clear search history here-->
         </div>
-      </div>
+      </section>
       <div>
         <ul class="list-group" id="city-List">
         </ul>
     </div>
 
-      <div class="col-7" id="weather-container">
+      <section class="col-7" id="weather-container">
       <div class="row mr-0">
           <div class="col-12 border border-dark m-3 rounded">
               <div class="row">
@@ -57,19 +57,18 @@
               </div>
           </div>
       </div>
+      </section>
+
+      <section>
       <div class="row">
           <div class="col-12">
               <h3>5-Day Forecast</h3>
           </div>
       </div>
-      <div class="row">
-          <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
-          <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
-          <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
-          <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
-          <div class="col forecast bg-primary text-white ml-3 mb-3 rounded"></div>
+      <div id="forecast-container" class="row">
+          <div class="col forecast"></div>    
       </div>
-    </div>
+    </section>
     </main>
     
 

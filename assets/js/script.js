@@ -3,12 +3,13 @@ const submitButton = document.getElementById("search-button");
 const inputBox = document.getElementById("city-input");
 const apiKey = "e005f427432a127e4dbd6f5d523c847e";
 const cityName = document.getElementById("city-name");
-// const weatherIcon = document.getElementById("current-pic");
+const currentDate = moment().format("(L)");
 const currentTemperature = document.getElementById("temperature");
 const currentHumidity = document.getElementById("humidity");
 const currentWindSpeed = document.getElementById("wind-speed");
 const currentUV = document.getElementById("UV-index");
 const currentIcon = document.getElementById("current-icon");
+const forecastData = document.querySelectorAll("#forecast");
 
 /* Function to load location using longitude and latitude
 
@@ -24,11 +25,10 @@ function getCurrentWeather(event) {
     })
     .then(function (data) {
       console.log(data);
+          
       let nameValue = data.name;
-      cityName.innerHTML = nameValue;
+      cityName.innerHTML = nameValue + " " + currentDate;
       console.log(nameValue);
-
-      // Need to add date using moment //
 
       let currentIconValue = data.weather[0].icon;
       currentIcon.innerHTML = "Icon:" + currentIconValue;
@@ -67,7 +67,6 @@ function getCurrentWeather(event) {
         .then(function (data) {
           console.log(data);
           
-          
           /* Adding button is JS for UV data */
           
           const uvButton = document.createElement("button");
@@ -95,17 +94,32 @@ function getCurrentWeather(event) {
     });
 }
 
+
+// Again not fetching forecast data//
+
+function getForecast(){
+
+  let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${inputBox.value}&appid=${apiKey}`;
+  fetch(forecastApi)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function(data){
+    console.log(data)
+
+    for (let index = 0; index < forecastData.length; index++) {
+      // need to loop through to show next 5 days
+      // next create elements in JS to show forecast date, icon, temp, humidity
+      // append these elements to the forecast-container.
+
+      
+    }
+  })
+}
+
+getForecast()
+
+//how to use submit-button event to set off more than one function
 submitButton.addEventListener("click", getCurrentWeather);
 
-// function getUV(lat, long){
-//     let
-//     let oneCallApi = `https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
-//     fetch(oneCallApi)
-//     .then(function(response){
-//         return response.json()
-//     })
-//     .then(function(data){
-//         console.log(data);
-//     })
 
-// }
