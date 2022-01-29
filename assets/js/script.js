@@ -9,16 +9,16 @@ const currentHumidity = document.getElementById("humidity");
 const currentWindSpeed = document.getElementById("wind-speed");
 const currentUV = document.getElementById("UV-index");
 const currentIcon = document.getElementById("current-icon");
-const forecastData = document.querySelectorAll("#forecast");
+const forecast = document.querySelector(".forecast");
+const current = document.querySelector(".current")
 
 /* Function to load location using longitude and latitude
 
 
 /*Function to fetch data from Current Weather API*/
-function getCurrentWeather(event) {
-  event.preventDefault();
+function getCurrentWeather(city) {
 
-  let currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${inputBox.value}&appid=${apiKey}`;
+  let currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   fetch(currentWeatherApi)
     .then(function (response) {
       return response.json();
@@ -55,17 +55,22 @@ function getCurrentWeather(event) {
       /* Fetching data for latitude and longitude to display UV info*/
 
       let latitude = data.coord.lat;
-      let longitude = data.coord.long;
+      let longitude = data.coord.lon;
       console.log(data.coord);
+      getForecast(latitude, longitude)
+      
+    });
+}
 
-      // Not fetching lat and long with below API call but fetching with above call
-      let oneCallApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+function getForecast(latitude, longitude){
+  let oneCallApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=metric`;
       fetch(oneCallApi)
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
           console.log(data);
+          displayForecast(data)
           
           /* Adding button is JS for UV data */
           
@@ -73,7 +78,7 @@ function getCurrentWeather(event) {
           uvButton.classList.add("btn");
 
           // passing the value and get the UV data 
-          uvButton.innerHTML = data.uvi;
+          uvButton.innerHTML = data.current.uvi;
 
           // if else statement to indicate whether UV is favorable (green), moderate(yellow) or severe(red)
           if (data.uvi < 3) {
@@ -91,35 +96,46 @@ function getCurrentWeather(event) {
           currentUV.appendChild(uvButton);
 
         });
-    });
 }
 
 
-// Again not fetching forecast data//
-
-function getForecast(){
-
-  let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${inputBox.value}&appid=${apiKey}`;
-  fetch(forecastApi)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function(data){
-    console.log(data)
-
-    for (let index = 0; index < forecastData.length; index++) {
-      // need to loop through to show next 5 days
-      // next create elements in JS to show forecast date, icon, temp, humidity
-      // append these elements to the forecast-container.
-
-      
+function displayForecast(data){
+  const forecastData = 5
+  
+    for (let i = 0; i < forecastData; i++) {
+      const card = document.createElement("div");
+      card.setAttribute("class", "card");
+      const cardBody = document.createElement("div");
+      cardBody.setAttribute("class", "card-body");
+      const cardText = document.createElement("div");
+      cardText.setAttribute("class", "card-text");
+      const temp = document.createElement("p");
+      temp.setAttribute("class", "weather-forecast");
+      const humidity = document.createElement("p");
+      humidity.setAttribute("class", "weather-forecast");
+      const wind = document.createElement("p");
+      wind.setAttribute("class", "weather-forecast");
+      const icon = document.createElement("img");
+      icon.setAttribute("src",`https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png`);
+      icon.style.width = "9rem"
+      temp.textContent = "Temperature:" + " " + data.daily[i].temp.day
+      humidity.textContent = "Humidity:" + " " + data.daily[i].humidity
+      wind.textContent = "Humidity:" + " " + data.daily[i].wind_speed
+      cardText.append(temp, humidity, wind)
+      cardBody.append(cardText)
+      card.append(icon, cardBody)
+      forecast.append(card) 
+  
     }
-  })
+  
 }
 
-getForecast()
 
 //how to use submit-button event to set off more than one function
-submitButton.addEventListener("click", getCurrentWeather);
+submitButton.addEventListener("click", (e)=>{
+  e.preventDefault()
+  const city = inputBox.value
+  getCurrentWeather(city)
+})
 
 
