@@ -9,4 +9,10 @@ Functionality:
 When a user opens the application they are presented with a weather dashboard with form inputs. When they search for a city, they are presented with current and future conditions for that city and that city is added to the search history. When they view current weather conditions for that city, then they presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index. The user is also able to view the UV index. They are presented with a color that indicates whether the conditions are favorable, moderate, or severe. When they view future weather conditions for that city, then they are presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity. Finally, once they click on a city in the search history, they are again presented with current and future conditions for that city.
 
 What to Expect:
+![Screenshot](https://user-images.githubusercontent.com/94486765/151694715-e822ccd7-f6f9-4379-ba34-95e5db824fd8.png)
 
+
+Links:
+https://github.com/NAli3107/Weather-Dashboard
+
+https://nali3107.github.io/Weather-Dashboard/
